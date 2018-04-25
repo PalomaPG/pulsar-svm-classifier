@@ -16,7 +16,7 @@ class SVMRBFClassifier(SVMClassifier):
         self.roc_name_png = 'rbf_roc.png'
         self.val_score_png = 'rbf_cv.png'
         self.roc_name_png = 'rbf_roc.png'
-        self.val_png_title = 'RBF Model CV scores'
+        self.val_png_title = 'RBF Kernel CV scores'
 
     def gamma_validation(self):
         val_scores = []
@@ -27,13 +27,13 @@ class SVMRBFClassifier(SVMClassifier):
             val_scores.append(np.mean(scores))
             val_scores_std.append(np.std(scores))
 
-        self.plot_cross_val(self.gammas, val_scores, val_scores_std, 'RBF Model CV scores ($\gamma$ param)',
+        self.plot_cross_val(self.gammas, val_scores, val_scores_std, 'RBF Kernel CV scores ($\gamma$ param)',
                             'rbf_cv_gamma.png', 'Parameter $\gamma$')
 
     def train_classifier(self):
         self.clf = svm.SVC(kernel='rbf')
-        #self.gamma_validation()
-        #self.c_validation()
+        self.gamma_validation()
+        self.c_validation()
         self.clf.C = 1
         self.clf.gamma = 0.1
         self.clf.fit(self.x_train, self.y_train)

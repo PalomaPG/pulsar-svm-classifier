@@ -15,7 +15,7 @@ class SVMPolyClassifier(SVMClassifier):
         self.n_s = np.arange(0, 20, 1, dtype=int)
         self.val_score_png = 'poly_cv.png'
         self.roc_name_png = 'poly_roc.png'
-        self.val_png_title = 'Polynomial Model CV scores (C param.)'
+        self.val_png_title = 'Polynomial Kernel CV scores (C param.)'
 
     def degree_validation(self):
         val_scores = []
@@ -26,16 +26,14 @@ class SVMPolyClassifier(SVMClassifier):
             val_scores.append(np.mean(scores))
             val_scores_std.append(np.std(scores))
 
-        self.plot_cross_val(self.n_s, val_scores, val_scores_std, 'Poly Model CV scores (n param)',
+        self.plot_cross_val(self.n_s, val_scores, val_scores_std, 'Poly Kernel CV scores (n param)',
                             'poly_cv_n.png', 'Parameter n', semilog=False)
 
     def train_classifier(self):
         self.clf = svm.SVC(kernel='poly')
-        #self.degree_validation()
+        self.degree_validation()
         self.clf.degree=1
-        #self.c_validation()
+        self.c_validation()
         self.clf.C = 1
         self.clf.fit(self.x_train, self.y_train)
         self.old_b = self.clf.intercept_[0]
-        #return self.clf
-

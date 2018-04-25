@@ -60,13 +60,9 @@ class SVMClassifier(ABC):
         plt.title(val_png_title)
         plt.savefig(val_score_png)
 
-    def get_score(self):
-        self.train_classifier()
-        score = self.clf.decision_function(self.x_test)
-        return score
-
     def classify(self, b):
-        w = np.array(self.get_score()+self.old_b-b, dtype=float)
+        score = self.clf.decision_function(self.x_test)
+        w = np.array(score+self.old_b-b, dtype=float)
         d = np.array([self.scale_answer(x) for x in w], dtype=float)
         return self.calc_rates(d)
 

@@ -26,12 +26,17 @@ def tarea2(path):
     x_val = scaler.transform(val_set[:, :8])
     y_val = val_set[:, 8]
 
-    svm = SVMLinearClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
-    lin_roc  =svm.get_roc_curve()
-    svm = SVMRBFClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
-    rbf_roc = svm.get_roc_curve()
-    svm = SVMPolyClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
-    poly_roc = svm.get_roc_curve()
+    lin_svm = SVMLinearClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
+    lin_svm .train_classifier()
+    lin_roc = lin_svm.get_roc_curve()
+
+    rbf_svm = SVMRBFClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
+    rbf_svm.train_classifier()
+    rbf_roc = rbf_svm.get_roc_curve()
+
+    poly_svm = SVMPolyClassifier(x_train, y_train, x_test, y_test, x_val, y_val)
+    poly_svm.train_classifier()
+    poly_roc = poly_svm.get_roc_curve()
 
     plot_rocs(lin_roc, rbf_roc, poly_roc)
 
@@ -40,11 +45,11 @@ def plot_rocs(lin_roc, rbf_roc, poly_roc):
     plt.figure()
     lw = 2
     plt.plot(lin_roc[:, 1], lin_roc[:, 0], color='darkgreen',
-             lw=lw, label='Linear Model')
+             lw=lw, label='Linear Kernel')
     plt.plot(rbf_roc[:, 1], rbf_roc[:, 0], color='darkred',
-             lw=lw, label='RBF Model')
+             lw=lw, label='RBF Kernel')
     plt.plot(poly_roc[:, 1], poly_roc[:, 0], color='darkcyan',
-             lw=lw, label='Poly Model')
+             lw=lw, label='Poly Kernel')
     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
     plt.title('Receiver operating characteristic')
     plt.xlabel('False Positive Rate')

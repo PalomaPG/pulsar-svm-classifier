@@ -12,11 +12,11 @@ class SVMLinearClassifier(SVMClassifier):
         self.bs = np.arange(-6.0, 6.0, 0.5)
         self.val_score_png = 'linear_cv.png'
         self.roc_name_png = 'linear_roc.png'
-        self.val_png_title = 'Linear Model CV scores (C param.)'
+        self.val_png_title = 'Linear Kernel CV scores (C param.)'
 
     def train_classifier(self):
         self.clf = svm.SVC(kernel='linear')
-        # self.c_validation()
+        self.c_validation()
         self.clf.C = 1
         self.clf.fit(self.x_train, self.y_train)
         self.old_b = self.clf.intercept_[0]
