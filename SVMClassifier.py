@@ -10,13 +10,13 @@ from abc import ABC, abstractmethod
 class SVMClassifier(ABC):
 
     def __init__(self, x_train, y_train, x_test, y_test, x_val, y_val):
+        self.Cs = np.logspace(-5, 2, 10)
         self.x_train = x_train
         self.y_train = y_train
         self.x_test = x_test
         self.y_test = y_test
         self.x_val = x_val
         self.y_val = y_val
-        self.Cs = None
         self.val_score_png = None
         self.roc_name_png = None
         self.clf = None
@@ -37,7 +37,6 @@ class SVMClassifier(ABC):
             scores = cross_val_score(self.clf, self.x_val, self.y_val, cv=5)
             val_scores.append(np.mean(scores))
             val_scores_std.append(np.std(scores))
-
         self.plot_cross_val(self.Cs, val_scores, val_scores_std, self.val_png_title, self.val_score_png, 'Parameter C')
 
     def plot_cross_val(self, params_props, val_scores, val_scores_std,

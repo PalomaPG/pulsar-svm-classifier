@@ -10,7 +10,7 @@ class SVMPolyClassifier(SVMClassifier):
 
     def __init__(self, x_train, y_train, x_test, y_test, x_val, y_val):
         super(SVMPolyClassifier,self).__init__(x_train, y_train, x_test, y_test, x_val, y_val)
-        self.Cs = np.logspace(-10, 0, 10)
+        self.Cs = np.logspace(-2, 3, 10)
         self.bs = np.arange(-6.0, 6.0, 0.5)
         self.n_s = np.arange(0, 20, 1, dtype=int)
         self.val_score_png = 'poly_cv.png'
@@ -31,9 +31,9 @@ class SVMPolyClassifier(SVMClassifier):
 
     def train_classifier(self):
         self.clf = svm.SVC(kernel='poly')
-        self.degree_validation()
+        #self.degree_validation()
         self.clf.degree=1
-        self.c_validation()
-        self.clf.C = 1
+        #self.c_validation()
+        self.clf.C = 1000
         self.clf.fit(self.x_train, self.y_train)
         self.old_b = self.clf.intercept_[0]

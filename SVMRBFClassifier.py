@@ -10,8 +10,8 @@ class SVMRBFClassifier(SVMClassifier):
 
     def __init__(self,x_train, y_train, x_test, y_test, x_val, y_val):
         super(SVMRBFClassifier, self).__init__(x_train, y_train, x_test, y_test, x_val, y_val)
-        self.Cs = np.logspace(-20, 0, 20)
-        self.gammas = np.arange(0.1, 10, 0.5)
+        self.Cs = np.logspace(-2, 3, 10)
+        self.gammas = np.logspace(-2, 1, 10)
         self.bs = np.arange(-6.0, 6.0, 0.5)
         self.roc_name_png = 'rbf_roc.png'
         self.val_score_png = 'rbf_cv.png'
@@ -34,7 +34,7 @@ class SVMRBFClassifier(SVMClassifier):
         self.clf = svm.SVC(kernel='rbf')
         self.gamma_validation()
         self.c_validation()
-        self.clf.C = 1
+        self.clf.C = 10**.1
         self.clf.gamma = 0.1
         self.clf.fit(self.x_train, self.y_train)
         self.old_b = self.clf.intercept_[0]
