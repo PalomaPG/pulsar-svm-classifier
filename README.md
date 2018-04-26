@@ -22,3 +22,8 @@
     and you have python 3.6 already installed, just run
 
     python3 tarea2.py <data_file_path>
+
+## Outputs
+
+This program generates nine images four of these correspond to ROC curves plotting (by kernel or 'solo' plots,
+and all three classifiers), and the rest correspond to cross validation results (depicted on the report).

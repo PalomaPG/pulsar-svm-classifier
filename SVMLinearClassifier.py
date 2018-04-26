@@ -15,7 +15,7 @@ class SVMLinearClassifier(SVMClassifier):
 
     def train_classifier(self):
         self.clf = svm.SVC(kernel='linear')
-        #self.c_validation()
+        self.c_validation()
         self.clf.C = 100
         self.clf.fit(self.x_train, self.y_train)
         self.old_b = self.clf.intercept_[0]
